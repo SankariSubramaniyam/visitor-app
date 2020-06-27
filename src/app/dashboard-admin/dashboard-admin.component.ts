@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Visit} from '../models/visit.model';
+import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { VisitService } from '../services/visit.service';
+import {formatDate} from '@angular/common';
+
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -7,31 +13,37 @@ import {Visit} from '../models/visit.model';
   styleUrls: ['./dashboard-admin.component.css']
 })
 export class DashboardAdminComponent{
-  adminVisits : Visit[] = [
-    {
-      visit_id : 1,
-      visitor_name : "Mr.lll",
-      visitor_designation : "HR",
-      visitor_organization : "Infosys",
-      purpose : "Internship opportunities",
-      visit_date : "2020-05-02",
-      visitor_email : "hrll@infosys.com",
-      visitor_mobileno : "9999999999",
-      place_person_of_visit : "Tapal section"
-    },
-    {
-      visit_id : 2,
-      visitor_name : "Mr.kkk",
-      visitor_designation : "HR",
-      visitor_organization : "Accenture",
-      purpose : "Internship opportunities",
-      visit_date : "2020-06-02",
-      visitor_email : "hrll@infosys.com",
-      visitor_mobileno : "9999999999",
-      place_person_of_visit : "Dean, CEG"
-    }
-  ];
-  selectedVisit = this.adminVisits[0];
+  isLoggedIn : boolean;
+  adminVisits : Visit[] ;
+  selectedVisit = new Visit();
+  filterToVisitApplied : boolean = false;
+  isFalse : boolean = false;
+  showLoader : boolean = false;
+  srchFilterTxt : string = "";
+  visitFilterObj : Visit = new Visit();
+
+  constructor(private userService : UserService, private router : Router, private authService : AuthService, private visitService : VisitService) { }
+  ngOnInit(): void {
+    this.isLoggedIn = this.authService.isAuthenticated();
+
+    this.visitFilterObj.filter_string = "";
+    this.visitFilterObj.to_visit = "";
+    this.visitFilterObj.visit_date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+    this.showLoader = true;
+
+    this.visitService.listVistsAdmin().subscribe(
+      response => {
+        this.adminVisits = response["Visits"];
+        this.selectedVisit = this.adminVisits[0];
+        this.showLoader = false;
+      },
+      error => {
+        console.log("Server error!");
+        console.log(error.error.message);
+        this.showLoader = false;
+      }
+    );
+  }
 
   showVisitorModal(index) : void{
     this.selectedVisit = this.adminVisits[index];
@@ -41,5 +53,41 @@ export class DashboardAdminComponent{
   toggle() {
     this.toggleNavBar = !this.toggleNavBar;
   }
+
+  logout(){
+    this.userService.deleteLocalStorage();
+    this.updateIsLoggedIn();
+    this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['']);
+    });
+  }
+
+  updateIsLoggedIn(){
+    this.isLoggedIn = this.authService.isAuthenticated();
+  }
+
+  filterToVisit($event){
+    this.filterToVisitApplied = true;
+    this.visitFilterObj.to_visit = (<string>$event);
+  }
+
+  clearFilterPlacePersonToVisit($event){
+    this.filterToVisitApplied = false;
+    this.visitFilterObj.to_visit = "";
+    event.stopPropagation();
+  }
+
+  clearSearchDate(){
+    this.visitFilterObj.visit_date = "";
+  }
+
+  clearFilterString(){
+    this.visitFilterObj.filter_string = "";
+  }
+
+  log(){
+    console.log(this.visitFilterObj);
+  }
+
 
 }

@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from './../services/user.service';
+import { Component, OnInit} from '@angular/core';
 import Swal from 'sweetalert2';
-import {Endpoint} from '../models/endpoint.model';
+import { VisitService } from '../services/visit.service'
+import { Visit } from '../models/visit.model';
+import { NgForm } from '@angular/forms';
+import {formatDate} from '@angular/common';
+import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-visitorpass-component',
@@ -9,9 +16,16 @@ import {Endpoint} from '../models/endpoint.model';
 })
 export class VisitorpassComponentComponent implements OnInit {
 
-  constructor() { this.trial();}
+  visitModel = new Visit();
+  showLoader : boolean = false;
+  startDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  startTime = formatDate(new Date(), 'hh:mm', 'en');
+  isLoggedIn : boolean;
 
+  constructor(private visitService : VisitService, private userService : UserService, private router : Router, private authService : AuthService) { }
   ngOnInit(): void {
+    this.setDateAndTime();
+    this.updateIsLoggedIn();
   }
 
   public toggleNavBar = false;
@@ -22,35 +36,53 @@ export class VisitorpassComponentComponent implements OnInit {
     Swal.fire('Visit Booked!', 'Please check your email for further instructions', 'success')
   }
 
-  endpoints : Endpoint[] =[
-    {
-      "workplace_division" : "AU Admin",
-      "workplace" : "Office of Vice Chancellor",
-      "endpoint_name" : "Vice-chancellor"
-    },
-    {
-      workplace_division : "AU Admin",
-      workplace : "Office of Vice Chancellor",
-      endpoint_name : "PS to VC"
-    }
-  ];
+  setToVisit($event){
+    this.visitModel.to_visit = (<string>$event);
+  }
 
-    wpmap = new Map();
-    //map.set("AU Admin",new Map().set("Office of Vice Chancellor",new Set.add("PS to VC").add("Vice-Chancellor"))));
+  onSubmit(visitForm : NgForm){
+    this.showLoader = true;
+    this.visitService.postVisit(JSON.stringify(this.visitModel)).subscribe(
+      response => {
+        //this.adminService.setToken(res['token']);
+        //this.router.navigateByUrl('/addPost');
+        this.showLoader = false;
+        this.bookVisit();
+        visitForm.resetForm();
+        this.setDateAndTime();
 
-    trial() {
-      console.log(JSON.stringify(Array.from(this.endpoints)));
-    for(let endpoint of this.endpoints ){
-      let eset = new Set();
-      eset.add(endpoint.endpoint_name);
-      let wmap = new Map();
-      wmap.set(endpoint.workplace,eset);
-      this.wpmap.set(endpoint.workplace_division,wmap);
-    }
-    console.log("Output:");
-    console.log(JSON.stringify(this.wpmap));
-    console.log(JSON.stringify(Array.from(this.wpmap)));
-    console.log(JSON.stringify(Array.from(JSON.stringify(this.wpmap.entries()))));
+        console.log(response);
+      },
+      error => {
+        let errorMsg : String;
+        errorMsg = error.error.error+". ";
+        this.showLoader = false;
+        Swal.fire('Error! Visit could not be booked', errorMsg+"Please resubmit or try again later!", 'error');
+        console.log(error);
+      }
+    );
+  }
+
+  testLog(text){
+    console.log("To VISIT: ",this.visitModel.to_visit);
+    console.log("Log: ",text);
+  }
+
+  setDateAndTime(){
+    this.visitModel.visit_date = this.startDate;
+    this.visitModel.visit_time = this.startTime;
+  }
+
+  logout(){
+    this.userService.deleteLocalStorage();
+    this.updateIsLoggedIn();
+    this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['']);
+    });
+  }
+  
+  updateIsLoggedIn(){
+    this.isLoggedIn = this.authService.isAuthenticated();
   }
 
 }

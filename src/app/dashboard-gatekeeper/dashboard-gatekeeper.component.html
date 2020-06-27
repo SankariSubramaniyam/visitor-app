@@ -47,8 +47,8 @@
           <tr *ngFor="let visit of gateVisits; let i = index">
             <th scope="row">{{visit.visit_id}}</th>
             <td>{{visit.visitor_name}}</td>
-            <td>{{visit.visitor_organization}},{{visit.visitor_designation}}</td>
-            <td>{{visit.place_person_of_visit}}</td>
+            <td>{{visit.visitor_org}},{{visit.visitor_desg}}</td>
+            <td>{{visit.to_visit}}</td>
             <td><button type="button" class="btn btn-primary" (click)="printVisitorModal(i)" onclick="window.print();">Generate Pass</button></td>
           </tr>
         </tbody>
@@ -82,11 +82,11 @@
           </tr>
           <tr>
             <th scope="row">Visitor Organization</th>
-            <td>{{selectedVisit.visitor_organization}}</td>
+            <td>{{selectedVisit.visitor_org}}</td>
           </tr>
           <tr>
             <th scope="row">Visitor Designation</th>
-            <td>{{selectedVisit.visitor_designation}}</td>
+            <td>{{selectedVisit.visitor_desg}}</td>
           </tr>
           <tr>
             <th scope="row">Date</th>
@@ -94,7 +94,7 @@
           </tr>
           <tr>
             <th scope="row">Place or Person of Visit</th>
-            <td>{{selectedVisit.place_person_of_visit }}</td>
+            <td>{{selectedVisit.to_visit }}</td>
           </tr>
           <tr>
         </tbody>

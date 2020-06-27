@@ -57,7 +57,7 @@
     <tr *ngFor="let visit of adminVisits; let i = index" data-toggle="modal" data-target="#visitorModal" (click)="showVisitorModal(i)">
       <th scope="row">{{visit.visit_id}}</th>
       <td>{{visit.visitor_name}}</td>
-      <td>{{visit.visitor_organization}},{{visit.visitor_designation}}</td>
+      <td>{{visit.visitor_org}},{{visit.visitor_desg}}</td>
       <td>{{visit.visit_date}}</td>
     </tr>
   </tbody>
@@ -102,7 +102,7 @@
           </tr>
           <tr>
             <th scope="row">Visitor Organization, Designation</th>
-            <td>{{selectedVisit.visitor_organization}} , {{selectedVisit.visitor_designation}}</td>
+            <td>{{selectedVisit.visitor_org}} , {{selectedVisit.visitor_desg}}</td>
           </tr>
           <tr>
             <th scope="row">Date</th>
@@ -129,7 +129,7 @@
 
     <div class="modal-footer">
       <button type="button" class="btn btn-primary">Approve</button>
-       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
     </div>
   </div>
 </div>

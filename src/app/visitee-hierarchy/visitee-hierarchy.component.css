@@ -10,7 +10,7 @@ mat-icon{
 }
 button.end-node{
   font-size: 0.5rem;
-  background-color: darkblue;
+  background-color: transparent;
   width:1.125rem;
   height:1.125rem;
   margin-right:0.3rem;
@@ -20,3 +20,12 @@ button.end-node{
 mat-tree-node.end-node{
     cursor: pointer;
 }
+
+.input-group-text{
+  background-color: transparent;
+  cursor:pointer;
+  outline:none;
+  padding:0px;
+  border:none;
+}
+

@@ -74,6 +74,8 @@ select.form-control {
   border-radius: 0;
 }
 
+
+
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="date"]:focus,
@@ -103,6 +105,78 @@ textarea.form-control:focus {
 .logo{
   width:70px;
 }
+
+.table-responsive{
+  height: 55vh;
+  max-height: 55vh;
+  overflow-y : scroll;
+  font-size: 6em;
+  margin-top:0px;
+}
+
+.modal-body{
+  height: 60vh;
+  max-height: 60vh;
+  overflow-y : scroll;
+}
+
+
+.input-group-text{
+  background-color: transparent;
+  cursor:pointer;
+  outline:none;
+  padding:0px;
+  border:none;
+}
+
+.expansion-panel{
+  box-shadow:none;
+  border:none;
+  outline:none;
+  padding:0px;
+  margin-bottom:0px;
+}
+
+.filterInput{
+  background-color: transparent;
+  color: #7b0708;
+  border: none;
+  outline:none;
+}
+
+.formLoader {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 100vw;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+}
+
+/* Transparent Overlay */
+.formLoader:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.badge-danger{
+  background-color:  #7b0708!important;
+  color: rgba(255,165,0)!important;
+}
+
+.mat-expansion-panel-focus-overlay {
+  background-color: transparent!important;
+}
+
+
 @media screen and (max-width: 768px) {
   .navbar-title {
     font-size: 6vw;
@@ -113,10 +187,15 @@ textarea.form-control:focus {
   .logo{
     width:50px;
   }
+  .table-responsive{
+    height: 60vh;
+    max-height: 60vh;
+  }
 }
 .thead-red th{
   background-color: #7b0708;
   color:rgba(255,165,0);
+  position: sticky;top:1px;
 }
 
 form label {

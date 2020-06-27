@@ -51,6 +51,15 @@ body,html{
   align-items: center;
   
   }
+
+  .welcome_div_full{
+    grid-column: one-start / four-end;
+  }
+
+  label{
+    display:none;
+  }
+
   .header__text-box{
   
    top: 20%; left: 20%;
@@ -162,6 +171,40 @@ body,html{
   .logo{
     width:70px;
   }
+
+  .alert-danger{
+    font-size:14px;
+    border:none;
+    outline:none;
+    background-color:transparent;
+    padding:0px;
+    margin:5px;
+  }
+
+  .formLoader {
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 100vw;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left:0;
+  }
+  
+  /* Transparent Overlay */
+  .formLoader:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.3);
+  }
+
   
   @media screen and (max-width: 768px) {
     .navbar-title {

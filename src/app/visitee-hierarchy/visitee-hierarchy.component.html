@@ -1,21 +1,21 @@
-<div class="form-group row">
+<div class="form-group row" *ngIf="displayLabel">
     
-    <div class="col-sm-12">
-       <label for="choose-visitee">Person/Place of Visit</label>
-      <input type="text" class="form-control" id="visitee-selected" value='{{selectedNodeString}}' disabled>
+    <div class="col-sm-12" [ngClass]="{'input-group': displayLabel != isTrue}" >
+       <b><label for="choose-visitee" *ngIf="displayLabel" >Person/Place of Visit</label></b>
+      <input type="text" class="form-control"  id="visitee-selected" value='{{selectedNodeString}}' placeholder='{{placeHolderText}}' disabled>
    </div>
-  </div>
+  </div>  
   <div class="col-sm-12 border" style="height:40vh;max-height:40vh;overflow-y:scroll;overflow-x:auto;">
     
   
 
 <mat-tree [dataSource] = "dataSource" [treeControl] = "treeControl">
-    <mat-tree-node *matTreeNodeDef = "let node" matTreeNodeToggle matTreeNodePadding (click)="selectNodeString(node)" class="end-node">
-       <button mat-icon-button  class="end-node" ></button>
+    <mat-tree-node *matTreeNodeDef = "let node" matTreeNodeToggle matTreeNodePadding matTreeNodePaddingIndent="25" (click)="selectNodeString(node)" class="end-node">
+       <button type="button" mat-icon-button  class="end-node" ></button>
        {{node.filename}}
     </mat-tree-node>
-    <mat-tree-node *matTreeNodeDef = "let node;when: hasChild" matTreeNodePadding>
-       <button mat-icon-button [attr.aria-label] = "'toggle ' + node.filename" (click)="selectNode(node)" matTreeNodeToggle class="expandable-node">
+    <mat-tree-node *matTreeNodeDef = "let node;when: hasChild" matTreeNodePadding matTreeNodePaddingIndent="20">
+       <button type="button" mat-icon-button [attr.aria-label] = "'toggle ' + node.filename" (click)="selectNode(node)" matTreeNodeToggle class="expandable-node">
           <mat-icon class = "mat-icon-rtl-mirror">
              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
           </mat-icon>

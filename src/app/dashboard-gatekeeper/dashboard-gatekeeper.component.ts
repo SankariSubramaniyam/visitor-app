@@ -11,24 +11,26 @@ export class DashboardGatekeeperComponent{
     {
       visit_id : 1,
       visitor_name : "Mr.lll",
-      visitor_designation : "HR",
-      visitor_organization : "Infosys",
-      purpose : "Internship opportunities",
-      visit_date : "2020-05-02",
+      visitor_desg : "HR",
+      visitor_org : "Infosys",
+      purpose : "Placement Offers",
+      visit_date : "2020-06-02",
+      visit_time : "02:00",
       visitor_email : "hrll@infosys.com",
       visitor_mobileno : "9999999999",
-      place_person_of_visit : "Tapal section"
+      to_visit : "Dean, CEG"
     },
     {
       visit_id : 2,
       visitor_name : "Mr.kkk",
-      visitor_designation : "HR",
-      visitor_organization : "Accenture",
+      visitor_desg : "HR",
+      visitor_org : "Accenture",
       purpose : "Internship opportunities",
       visit_date : "2020-06-02",
+      visit_time : "02:00",
       visitor_email : "hrll@infosys.com",
       visitor_mobileno : "9999999999",
-      place_person_of_visit : "Dean, CEG"
+      to_visit : "Dean, CEG"
     }
   ];
   selectedVisit = this.gateVisits[0];

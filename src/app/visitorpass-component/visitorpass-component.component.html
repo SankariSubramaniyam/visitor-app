@@ -1,108 +1,138 @@
 <div>
-<header class="header_div">
+  <header class="header_div">
     <nav class="navbar col-sm-12">
-   <span class="navbar-brand">
-    <a routerLink="" routerLinkActive="active" class="navbar-title"><img src="/../assets/images/annauniv_red.png" class="logo">&nbsp;&nbsp;AU VISITOR PASS</a>
-  </span>
-  <span class="float-right">
-    <button type="button" id="navbar-toggle-button" (click)=toggle()>
-      <i class="material-icons">menu</i>
-    </button>
-    <span id="navbar-links-group" *ngIf = "toggleNavBar">
-    <a routerLink="/../visitorPass" routerLinkActive="active" class="navbar-link-right">Visitor Pass</a>
-    <a routerLink="/../dashBoardAdmin" routerLinkActive="active" class="navbar-link-right">DashBoard</a>
-    <a href="#" class="navbar-link-right">Logout</a>
-    </span>
-  </span>
-  </nav>
+      <span class="navbar-brand">
+        <a routerLink="" routerLinkActive="active" class="navbar-title"><img src="/../assets/images/annauniv_red.png"
+            class="logo">&nbsp;&nbsp;AU VISITOR PASS</a>
+      </span>
+      <span class="float-right">
+        <button type="button" id="navbar-toggle-button" (click)=toggle()>
+          <i class="material-icons">menu</i>
+        </button>
+        <span id="navbar-links-group" *ngIf="toggleNavBar">
+          <a routerLink="/../visitorPass" routerLinkActive="active" class="navbar-link-right">Visitor Pass</a>
+          <a routerLink="/../dashBoardAdmin" routerLinkActive="active" class="navbar-link-right" *ngIf="isLoggedIn">DashBoard</a>
+          <a href="javascript:void(0)" class="navbar-link-right" (click)="logout()" *ngIf="isLoggedIn">Logout</a>
+        </span>
+      </span>
+    </nav>
   </header>
 
 
-    <div class="div-body">
-      <div class="rightcolumn">
-        <h3 class="rgt-title">BOOK APPOINTMENT</h3>
-        <hr  />
-        <div class="card">
-          <form>
-            <div class="form-group row">
-              <label for="inputName" class="col-sm-2 col-form-label">Visitor Name</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputName" >
-              </div>
+  <div class="div-body">
+    <div class="rightcolumn">
+      <h3 class="rgt-title">BOOK APPOINTMENT</h3>
+      <hr />
+      <div class="card">
+        <form #visitForm="ngForm" (ngSubmit)="onSubmit(visitForm)">
+          <div class="form-group row">
+            <label for="inputName" class="col-sm-2 col-form-label">Visitor Name</label>
+            <div class="col-sm-10">
+              <input [(ngModel)]="visitModel.visitor_name" required pattern="[a-zA-Z\s]+" maxlength="40"
+                #inputName="ngModel" name="inputName" type="text" class="form-control" id="inputName">
             </div>
+            <div class="alert alert-danger col-sm-12" *ngIf="!inputName.valid && inputName.touched">Please Enter Valid
+              Name</div>
+          </div>
 
-            <div class="form-group row">
-              <label for="inputNumber" class="col-sm-2 col-form-label">Mobile No.</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputNumber" >
-              </div>
+          <div class="form-group row">
+            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+              <input [(ngModel)]="visitModel.visitor_email" #inputEmail="ngModel" required name="inputEmail"
+                type="email" class="form-control" id="inputEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
             </div>
+            <div class="alert alert-danger col-sm-12" *ngIf="!inputEmail.valid && inputEmail.touched">Please Enter Valid
+              Email</div>
+          </div>
 
-            <div class="form-group row">
-              <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-              <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail" >
-              </div>
+          <div class="form-group row">
+            <label for="inputNumber" class="col-sm-2 col-form-label">Mobile No.</label>
+            <div class="col-sm-10">
+              <input [(ngModel)]="visitModel.visitor_mobileno" #inputmn="ngModel" required name="inputNumber"
+                type="text" class="form-control" id="inputNumber" pattern="[0-9]{10}">
             </div>
+            <div class="alert alert-danger col-sm-12" *ngIf="!inputmn.valid && inputmn.touched">Please Enter 10-digit
+              Mobile Number</div>
+          </div>
 
-			 <div class="form-group row">
-              <label for="visitorOrg" class="col-sm-2 col-form-label">Visitor Organization</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="visitorOrg" placeholder="">
-              </div>
-            </div>
 
-            <div class="form-group row">
-              <label for="desgDetails" class="col-sm-2 col-form-label">Designation Details</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="desgDetails" placeholder="">
-              </div>
+          <div class="form-group row">
+            <label for="visitorOrg" class="col-sm-2 col-form-label">Visitor Organization</label>
+            <div class="col-sm-10">
+              <input [(ngModel)]="visitModel.visitor_org" #inputorg="ngModel" required name="visitorOrg" type="text"
+                class="form-control" id="visitorOrg" pattern="[a-zA-Z0-9\s]+">
             </div>
-      
-            <app-visitee-hierarchy></app-visitee-hierarchy>
+            <div class="alert alert-danger col-sm-12" *ngIf="!inputorg.valid && inputorg.touched">Please Enter Valid
+              Organization</div>
+          </div>
 
-            <div class="form-group row">
-              <label for="datePicker" class="col-sm-2 col-form-label">Date</label>
-              <div class="col-sm-4">
-                <input type="date" class="form-control" id="datePicker" >
-              </div>
-			  <label for="timePick" class="col-sm-2 col-form-label">Time</label>
-              <div class="col-sm-3">
-                <input type="time" class="form-control" id="timePick" >
-              </div>
+          <div class="form-group row">
+            <label for="desgDetails" class="col-sm-2 col-form-label">Visitor Designation</label>
+            <div class="col-sm-10">
+              <input [(ngModel)]="visitModel.visitor_desg" #inputdd="ngModel" required name="desgDetails" type="text"
+                class="form-control" id="desgDetails" pattern="[a-zA-Z\s]+">
             </div>
-			
-			<div class="form-group row">
-              
-            </div>
-			
-			
+            <div class="alert alert-danger col-sm-12" *ngIf="!inputdd.valid && inputdd.touched">Please Enter Valid
+              Designation</div>
+          </div>
 
-			<div class="form-group row">
-              <label for="purpose of visit" class="col-sm-2 col-form-label">Purpose of Visit</label>
-              <div class="col-sm-10">
-                <select class="form-control">
-                  <option>Official</option>
-                  <option>Personal</option>
-                </select>
-              </div>
-            </div>
+          <app-visitee-hierarchy (stringEventEmitter)="setToVisit($event)"></app-visitee-hierarchy>
+          <div class="form-group row">
+            <input [(ngModel)]="visitModel.to_visit" #inputtv="ngModel" name="toVisit" type="hidden" required
+              class="form-control" id="toVisit">
+            <div class="alert alert-danger col-sm-12" *ngIf="!inputtv.valid && inputtv.touched">Please Enter Valid
+              Person or Place to Visit</div>
+          </div>
 
-            <div class="form-group">
-              <label for="purposeTextArea">Detailed Purpose of Visit (Optional) </label>
-              <textarea class="form-control" id="purposeTextArea" rows="3" placeholder="Please explain your purpose of visit briefly..."></textarea>
+          <div class="form-group row">
+            <label for="visitDate" class="col-sm-2 col-form-label">Date</label>
+            <div class="col-sm-4">
+              <input [(ngModel)]="visitModel.visit_date" #inputdt="ngModel" required name="visitDate" type="date"
+                class="form-control" id="visitDate" min="{{startDate}}">
             </div>
-            <div class="form-group row">
-              <div class="col-sm-12" style="margin-bottom:0px;">
-                <button type="button" class="btn btn-light btn-block" id="bookAppointment" (click) = bookVisit()>Book Visit</button>
-              </div>
+            <label for="visitTime" class="col-sm-2 col-form-label">Time</label>
+            <div class="col-sm-3">
+              <input [(ngModel)]="visitModel.visit_time" #inputtm="ngModel" required name="visitTime" type="time"
+                class="form-control" id="visitTime" min="{{startTime}}">
             </div>
-          </form>
-        </div>
+            <div class="alert alert-danger col-sm-12"
+              *ngIf="!inputdt.valid && inputdt.touched && inputtm.valid && inputtm.touched">Please Enter Valid Date and
+              Time</div>
+          </div>
+
+          <div class="form-group row">
+            <label for="visitPurpose" class="col-sm-2 col-form-label">Purpose of Visit</label>
+            <div class="col-sm-10">
+              <select [(ngModel)]="visitModel.purpose" #inputpr="ngModel" required name="visitPurpose"
+                class="form-control" id="visitPurpose" pattern="[a-zA-Z0-9\s]+">
+                <option>Official</option>
+                <option>Personal</option>
+              </select>
+            </div>
+            <div class="alert alert-danger col-sm-12" *ngIf="!inputpr.valid && inputpr.touched">Please Enter Valid
+              Purpose</div>
+          </div>
+
+          <div class="form-group">
+            <label for="purposeTextArea">Detailed Purpose of Visit (Optional) </label>
+            <textarea [(ngModel)]="visitModel.det_purpose" #inputdp="ngModel" name="purposeTextArea"
+              class="form-control" id="purposeTextArea" rows="3"
+              placeholder="Please explain your purpose of visit briefly..." pattern="[a-zA-Z0-9\s]+"></textarea>
+            <div class="alert alert-danger col-sm-12" *ngIf="!inputdp.valid && inputdp.touched">Please Enter Valid
+              Purpose</div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12" style="margin-bottom:0px;">
+              <button type="submit" class="btn btn-light btn-block" id="bookVisit" [disabled]="!visitForm.valid">
+                <span [matTooltip]="!visitForm.valid ? 'Please fill all required fields with valid data!' : ''">Book Visit</span>
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
-</div>
-
-<div (click)=trial()>
-  hrhrf
+    <div class="formLoader" *ngIf="showLoader">
+      <mat-progress-bar mode="indeterminate" color="warn" aria-label="Loading"></mat-progress-bar>
+    </div>
+  </div>
 </div>

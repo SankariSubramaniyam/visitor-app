@@ -15,26 +15,26 @@
           </button>
             <span id="navbar-links-group" *ngIf = "toggleNavBar">
     <a routerLink="visitorPass" routerLinkActive="active" class="navbar-link-right">Visitor Pass</a>
-    <a routerLink="dashBoardAdmin" routerLinkActive="active" class="navbar-link-right">DashBoard</a>
-    <a href="#" class="navbar-link-right">Logout</a>
+    <a routerLink="dashBoardAdmin" routerLinkActive="active" class="navbar-link-right" *ngIf="isLoggedIn">DashBoard</a>
+    <a href="javascript:void(0)" class="navbar-link-right" (click)="logout()" *ngIf="isLoggedIn">Logout</a>
     </span>
   </span>
 </nav>
   </header>
-  <div class="welcome_div">
+  <div [ngClass]="{'welcome_div': isLoggedIn == isLoggedIn, 'welcome_div_full': isLoggedIn == isTRUE }">
 
     <div class="header__text-box">
               <h1 class="heading-primary">
                   <span class="heading-primary--main">ANNA UNIVERSITY VISITOR PASS GENERATION</span>
                   <span class="heading-primary--sub">Visitors to Anna University CEG/MIT campus are required to book a visit before entry</span>
               </h1>
-              <a routerLink="visitorPass" routerLinkActive="active" class="btnn btnn--white btnn--animated">Book a Visit</a>
+              <a routerLink="visitorPass" routerLinkActive="active" class="btnn btnn--white btnn--animated">Book Visit</a>
           </div>
 
   </div>
-  <div class="login_div">
+  <div class="login_div" *ngIf="!isLoggedIn" >
 
-    <form>
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
       <h3>LOGIN</h3>
       <hr  />
 
@@ -43,7 +43,7 @@
           <div class="input-group-prepend">
             <div class="input-group-text"><i class="material-icons">person</i></div>
           </div>
-          <input type="text" class="form-control" id="loginUserName" placeholder="Email or Mobile No.">
+          <input type="text" [(ngModel)]="userModel.uname" required pattern="[a-zA-Z0-9@.]+" #loginUname="ngModel" name="loginUname" id="loginUname" placeholder="Username" class="form-control">
         </div>
       </div>
 
@@ -52,22 +52,31 @@
           <div class="input-group-prepend">
             <div class="input-group-text"><i class="material-icons">lock</i></div>
           </div>
-          <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+          <input type="password" [(ngModel)]="userModel.pwd" required #loginPwd="ngModel" name="loginPwd" id="loginPwd" placeholder="Password" class="form-control">
         </div>
       </div>
 
       <div class="form-group row">
         <div class="col-sm-12">
-          <button type="button" class="btn btn-light btn-block" id="bookAppointment">Login</button>
+          <div class="validateErrorMsg">
+            <div class="alert alert-danger" *ngIf="!loginUname.valid && loginUname.touched">Please Enter Valid Username</div>
+            <div class="alert alert-danger" *ngIf="!loginPwd.valid && loginPwd.touched">Please Enter Correct Password</div>
+            <div class="alert alert-danger">{{serverErrorMsg}}</div>
+          </div>
+          <button type="submit" class="btn btn-light btn-block" id="loginBtn" [disabled]="!loginForm.valid" >Login</button>
           <hr  />
-          <a href="layouts/userRegister.html">New User? Click here to Register</a>
+          <a href="#">New User? Click here to Register</a>
         </div>
-      </div>
+      </div> 
       <hr  />
       <h5 >Please Note</h5>
       This facility is provided for University staff. Login is not necessary for visitors.
       <hr  />
     </form>
+
+    <div class="formLoader" *ngIf="showLoader">
+      <mat-progress-bar mode="indeterminate" color="warn" aria-label="Loading"></mat-progress-bar>
+    </div>
 
   </div>
   <footer class="footer_div">
