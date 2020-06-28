@@ -45,8 +45,10 @@ export class DashboardAdminComponent{
     );
   }
 
-  showVisitorModal(index) : void{
-    this.selectedVisit = this.adminVisits[index];
+  showVisitorModal(visit : Visit) : void{
+    this.selectedVisit = this.adminVisits.find(visitItem => visitItem.visit_id == visit.visit_id);
+    if(this.selectedVisit==null || this.selectedVisit==undefined)
+      this.selectedVisit = this.adminVisits[0];
   }
 
   public toggleNavBar = false;

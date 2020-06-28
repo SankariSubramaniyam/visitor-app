@@ -70,8 +70,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let visit of adminVisits | srchFilterPipe : visitFilterObj ; let i = index" data-toggle="modal" data-target="#visitorModal"
-          (click)="showVisitorModal(i)">
-          <th scope="row">{{i+1}}</th> 
+          (click)="showVisitorModal(visit)">
+          <th scope="row">{{i+1}}</th>
           <td>{{visit.visit_date}}</td>
           <td>{{visit.visit_id}}</td>
           <td>{{visit.visitor_name}}</td>

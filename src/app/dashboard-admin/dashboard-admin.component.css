@@ -16,9 +16,8 @@ html, body {
 }
 .navbar-title{
   color: rgb(255,165,0);
-  font-size:40px;
+  font-size:3vw;
   overflow: hidden;
-  word-wrap:break-word;
 }
 
 .navbar-title:hover{
@@ -103,7 +102,7 @@ textarea.form-control:focus {
   }
 }
 .logo{
-  width:70px;
+  width:50px;
 }
 
 .table-responsive{

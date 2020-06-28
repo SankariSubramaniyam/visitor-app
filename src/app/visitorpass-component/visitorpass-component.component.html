@@ -26,8 +26,8 @@
       <div class="card">
         <form #visitForm="ngForm" (ngSubmit)="onSubmit(visitForm)">
           <div class="form-group row">
-            <label for="inputName" class="col-sm-2 col-form-label">Visitor Name</label>
-            <div class="col-sm-10">
+            <label for="inputName" class="col-sm-3 col-form-label">Visitor Name</label>
+            <div class="col-sm-9">
               <input [(ngModel)]="visitModel.visitor_name" required pattern="[a-zA-Z\s]+" maxlength="40"
                 #inputName="ngModel" name="inputName" type="text" class="form-control" id="inputName">
             </div>
@@ -36,8 +36,8 @@
           </div>
 
           <div class="form-group row">
-            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-            <div class="col-sm-10">
+            <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
               <input [(ngModel)]="visitModel.visitor_email" #inputEmail="ngModel" required name="inputEmail"
                 type="email" class="form-control" id="inputEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
             </div>
@@ -46,8 +46,8 @@
           </div>
 
           <div class="form-group row">
-            <label for="inputNumber" class="col-sm-2 col-form-label">Mobile No.</label>
-            <div class="col-sm-10">
+            <label for="inputNumber" class="col-sm-3 col-form-label">Mobile No.</label>
+            <div class="col-sm-9">
               <input [(ngModel)]="visitModel.visitor_mobileno" #inputmn="ngModel" required name="inputNumber"
                 type="text" class="form-control" id="inputNumber" pattern="[0-9]{10}">
             </div>
@@ -57,8 +57,8 @@
 
 
           <div class="form-group row">
-            <label for="visitorOrg" class="col-sm-2 col-form-label">Visitor Organization</label>
-            <div class="col-sm-10">
+            <label for="visitorOrg" class="col-sm-3 col-form-label">Visitor Organization</label>
+            <div class="col-sm-9">
               <input [(ngModel)]="visitModel.visitor_org" #inputorg="ngModel" required name="visitorOrg" type="text"
                 class="form-control" id="visitorOrg" pattern="[a-zA-Z0-9\s]+">
             </div>
@@ -67,8 +67,8 @@
           </div>
 
           <div class="form-group row">
-            <label for="desgDetails" class="col-sm-2 col-form-label">Visitor Designation</label>
-            <div class="col-sm-10">
+            <label for="desgDetails" class="col-sm-3 col-form-label">Visitor Designation</label>
+            <div class="col-sm-9">
               <input [(ngModel)]="visitModel.visitor_desg" #inputdd="ngModel" required name="desgDetails" type="text"
                 class="form-control" id="desgDetails" pattern="[a-zA-Z\s]+">
             </div>
