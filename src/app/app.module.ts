@@ -28,6 +28,7 @@ import { SearchFilterPipe } from './searchFilter.pipe';
 import { VisitService } from './services/visit.service';
 import { UserService } from './services/user.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AppHeaderComponent } from './app-header/app-header.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     DashboardGatekeeperComponent,
     VisiteeHierarchyComponent,
     PageNotFoundComponent,
-    SearchFilterPipe
+    SearchFilterPipe,
+    AppHeaderComponent
   ],
   imports: [
     BrowserModule,

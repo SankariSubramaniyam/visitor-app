@@ -13,21 +13,19 @@ import {formatDate} from '@angular/common';
   styleUrls: ['./dashboard-admin.component.css']
 })
 export class DashboardAdminComponent{
-  isLoggedIn : boolean;
   adminVisits : Visit[] ;
   selectedVisit = new Visit();
   filterToVisitApplied : boolean = false;
   isFalse : boolean = false;
   showLoader : boolean = false;
-  srchFilterTxt : string = "";
   visitFilterObj : Visit = new Visit();
 
-  constructor(private userService : UserService, private router : Router, private authService : AuthService, private visitService : VisitService) { }
+  constructor(private visitService : VisitService) { }
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isAuthenticated();
 
     this.visitFilterObj.filter_string = "";
     this.visitFilterObj.to_visit = "";
+    this.visitFilterObj.visitor_status=1;
     this.visitFilterObj.visit_date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
     this.showLoader = true;
 
@@ -38,9 +36,10 @@ export class DashboardAdminComponent{
         this.showLoader = false;
       },
       error => {
+        this.showLoader = false;
         console.log("Server error!");
         console.log(error.error.message);
-        this.showLoader = false;
+        
       }
     );
   }
@@ -49,23 +48,6 @@ export class DashboardAdminComponent{
     this.selectedVisit = this.adminVisits.find(visitItem => visitItem.visit_id == visit.visit_id);
     if(this.selectedVisit==null || this.selectedVisit==undefined)
       this.selectedVisit = this.adminVisits[0];
-  }
-
-  public toggleNavBar = false;
-  toggle() {
-    this.toggleNavBar = !this.toggleNavBar;
-  }
-
-  logout(){
-    this.userService.deleteLocalStorage();
-    this.updateIsLoggedIn();
-    this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['']);
-    });
-  }
-
-  updateIsLoggedIn(){
-    this.isLoggedIn = this.authService.isAuthenticated();
   }
 
   filterToVisit($event){

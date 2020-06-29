@@ -1,21 +1,7 @@
   <div class="container_index">
     <div class="no-print">
     <header class="header_div">
-      <nav class="navbar col-sm-12">
-        <span class="navbar-brand">
-          <a href="../index.html" class="navbar-title"><img src="/../../assets/images/annauniv_red.png" class="logo">&nbsp;&nbsp;AU VISITOR PASS</a>
-        </span>
-        <span class="float-right">
-          <button type="button" id="navbar-toggle-button" (click)=toggle()>
-            <i class="material-icons">menu</i>
-          </button>
-            <span id="navbar-links-group" *ngIf = "toggleNavBar">
-          <a routerLink="../visitorPass" routerLinkActive="active" class="navbar-link-right">Visitor Pass</a>
-          <a routerLink="../dashBoardAdmin" routerLinkActive="active" class="navbar-link-right" *ngIf="isLoggedIn">DashBoard</a>
-          <a href="javascript:void(0)" class="navbar-link-right" (click)="logout()" *ngIf="isLoggedIn">Logout</a>
-          </span>
-        </span>
-      </nav>
+      <app-header></app-header>
     </header>
 
     <div class="container-fluid "><br  />

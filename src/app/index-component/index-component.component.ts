@@ -18,14 +18,8 @@ export class IndexComponentComponent implements OnInit {
   isLoggedIn : boolean;
   isTRUE : boolean = true;
 
-  constructor(private userService : UserService, private router : Router, private authService : AuthService) { }
+  constructor(private userService : UserService, private router : Router) { }
   ngOnInit(): void {
-    this.updateIsLoggedIn();
-  }
-
-  public toggleNavBar = false;
-  toggle() {
-    this.toggleNavBar = !this.toggleNavBar;
   }
 
   onSubmit(loginForm : NgForm){
@@ -38,7 +32,7 @@ export class IndexComponentComponent implements OnInit {
         this.showLoader = false;
 
         this.userService.setToken(response['token']);
-        this.updateIsLoggedIn();
+        //this.updateIsLoggedIn();
 
         this.router.navigateByUrl('../dashBoard', { skipLocationChange: true }).then(() => {
           this.router.navigate(['../dashBoard']);
@@ -51,21 +45,17 @@ export class IndexComponentComponent implements OnInit {
         }
         this.showLoader = false;
         
-        this.updateIsLoggedIn();
+        //this.updateIsLoggedIn();
       }
     );
   }
 
-  logout(){
-    this.userService.deleteLocalStorage();
-    this.updateIsLoggedIn();
-    this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['']);
-    });
-  }
+  // updateIsLoggedIn(){
+  //   this.isLoggedIn = this.authService.isAuthenticated();
+  // }
 
-  updateIsLoggedIn(){
-    this.isLoggedIn = this.authService.isAuthenticated();
+  setLoginStatus($event){
+    this.isLoggedIn = (<boolean>$event);
   }
 
 }

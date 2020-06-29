@@ -8,37 +8,9 @@ html, body {
   background-color:  #7b0708;
   border-bottom: 4px solid rgba(255,165,0);
 }
-#navbar-toggle-button{
-  padding-left:5px;
-  background-color:transparent;
-  outline:none;
-  border:none;
-  color:rgb(255,165,0);
-}
-.navbar-title{
-  color: rgb(255,165,0);
-  font-size:3vw;
-  overflow: hidden;
-}
 
 .rgt-title{
   text-align: center;
-}
-
-.navbar-title:hover{
-  color: rgb(255,165,0);
-  text-decoration: none;
-}
-
-
-.navbar-link-right,.navbar-link-right:hover{
-  color: rgb(255,165,0);
-  text-decoration: none;
-  font-size:20px;
-  padding-left: 15px;
-}
-.navbar-link-right:hover{
-    text-decoration: underline;
 }
 
 .card {
@@ -104,18 +76,10 @@ textarea.form-control:focus {
 
   }
 }
-.logo{
-  width:50px;
-}
+
 @media screen and (max-width: 768px) {
-  .navbar-title {
-    font-size: 6vw;
-  }
   .card{
     width:95%;
-  }
-  .logo{
-    width:50px;
   }
 }
 .thead-red th{

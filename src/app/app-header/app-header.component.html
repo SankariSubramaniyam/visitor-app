@@ -1,0 +1,13 @@
+<nav class="navbar col-sm-12">
+    <span class="navbar-brand">
+     <a href="#" class="navbar-title"><img src="/../assets/images/annauniv_red.png" class="logo" alt="Logo">&nbsp;&nbsp;AU VISITOR PASS</a>
+   </span>
+             <i class="material-icons navbar-toggle-button" (click)=toggle()>menu</i>
+          
+             <span id="navbar-links-group" *ngIf = "toggleNavBar">
+     <a routerLink="/visitorPass" routerLinkActive="active" class="navbar-link-right">Visitor Pass</a>
+     <a routerLink="/dashBoard" routerLinkActive="active" class="navbar-link-right" *ngIf="isLoggedIn">DashBoard</a>
+     <a href="javascript:void(0)" class="navbar-link-right" (click)="logout()" *ngIf="isLoggedIn">Logout</a>
+     </span>
+   
+ </nav>

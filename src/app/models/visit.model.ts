@@ -11,4 +11,6 @@ export class Visit{
     to_visit : string;
     det_purpose? : string;
     filter_string? : string;
+    visited? : Number;
+    visitor_status? : Number;
 }

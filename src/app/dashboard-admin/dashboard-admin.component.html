@@ -1,22 +1,6 @@
 <div class="container_index">
   <header class="header_div">
-    <nav class="navbar col-sm-12">
-      <span class="navbar-brand">
-        <a routerLink="" routerLinkActive="active" class="navbar-title"><img src="/../../assets/images/annauniv_red.png"
-            alt="Logo" class="logo">&nbsp;&nbsp;AU VISITOR PASS</a>
-      </span>
-      <span class="float-right">
-        <button type="button" id="navbar-toggle-button" (click)=toggle()>
-          <i class="material-icons">menu</i>
-        </button>
-        <span id="navbar-links-group" *ngIf="toggleNavBar">
-          <a routerLink="../visitorPass" routerLinkActive="active" class="navbar-link-right">Visitor Pass</a>
-          <a routerLink="../dashBoardAdmin" routerLinkActive="active" class="navbar-link-right"
-            *ngIf="isLoggedIn">DashBoard</a>
-          <a href="javascript:void(0)" class="navbar-link-right" (click)="logout()" *ngIf="isLoggedIn">Logout</a>
-        </span>
-      </span>
-    </nav>
+    <app-header></app-header>
   </header>
 
   <div class="container-fluid "><br />
@@ -34,6 +18,15 @@
         <div class="input-group-append" (click) = "clearFilterString()">
           <div class="input-group-text"><i class="material-icons">clear</i></div>
         </div>
+      </div>
+
+      <div class="col-sm-3 input-group">
+        <select class="form-control" [(ngModel)]="visitFilterObj.visitor_status" 
+            id="selectTrackStatus" name="selectTrackStatus" #selectTrackStatus>
+            <option value='1' selected>Tracked</option>
+            <option value='0'>Untracked</option>
+            <option value='999'>All</option>
+        </select>        
       </div>
 
       <mat-expansion-panel class="col-sm-12 col-md-12 expansion-panel">
@@ -70,12 +63,12 @@
       </thead>
       <tbody>
         <tr *ngFor="let visit of adminVisits | srchFilterPipe : visitFilterObj ; let i = index" data-toggle="modal" data-target="#visitorModal"
-          (click)="showVisitorModal(visit)">
-          <th scope="row">{{i+1}}</th>
+          (click)="showVisitorModal(visit)" [ngClass]="(visit.visited == '1' ) ? 'visited' : 'not-visited'">
+          <th scope="row">{{i+1}}</th>  
           <td>{{visit.visit_date}}</td>
           <td>{{visit.visit_id}}</td>
           <td>{{visit.visitor_name}}</td>
-          <td>{{visit.visitor_org}},{{visit.visitor_desg}}</td>
+          <td>{{visit.visitor_org}}, {{visit.visitor_desg}}</td>
           <td>{{visit.to_visit}}</td>
         </tr>
       </tbody>
@@ -142,7 +135,6 @@
               <th scope="row">Mobile Number</th>
               <td>{{selectedVisit.visitor_mobileno}}</td>
             </tr>
-
           </tbody>
         </table>
 

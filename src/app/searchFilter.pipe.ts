@@ -24,7 +24,8 @@ return items.filter( visit => {
             (visit.visitor_org.toLowerCase().concat(",").concat(visit.visitor_desg.toLowerCase())).includes(srchTxt)  
             ) &&
             visit.visit_date.includes(searchVisitObj.visit_date) &&
-            visit.to_visit.toLowerCase().includes(searchVisitObj.to_visit.toLowerCase())
+            visit.to_visit.toLowerCase().includes(searchVisitObj.to_visit.toLowerCase()) &&
+            (visit.visitor_status == searchVisitObj.visitor_status || searchVisitObj.visitor_status==999)
         );
     });
    }

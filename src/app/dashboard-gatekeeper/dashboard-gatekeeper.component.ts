@@ -15,30 +15,17 @@ import Swal from 'sweetalert2';
 export class DashboardGatekeeperComponent implements OnInit{
 
   gateVisits : Visit[];
-  isLoggedIn : boolean;
+  //isLoggedIn : boolean;
   showLoader : boolean = false;
   visitFilterDate : string;
   isFalse : boolean = false;
   selectedVisit = new Visit();
 
-  constructor(private userService : UserService, private router : Router, private authService : AuthService, private visitService : VisitService) { }
+  constructor(private visitService : VisitService) { }
 
   ngOnInit(): void {
-    this.updateIsLoggedIn();
     this.visitFilterDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
     this.listGateVisitsFromService();
-  }
-
-  logout(){
-    this.userService.deleteLocalStorage();
-    this.updateIsLoggedIn();
-    this.router.navigateByUrl('', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['']);
-    });
-  }
-
-  updateIsLoggedIn(){
-    this.isLoggedIn = this.authService.isAuthenticated();
   }
 
   printVisitorModal(visit : Visit) : void{
@@ -68,11 +55,6 @@ export class DashboardGatekeeperComponent implements OnInit{
         Swal.fire('Error!', "No Internet or Server Error!", 'error');
       }
     );
-  }
-
-  public toggleNavBar = false;
-  toggle() {
-    this.toggleNavBar = !this.toggleNavBar;
   }
 
   inputDateEvent(){
