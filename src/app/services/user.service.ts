@@ -12,7 +12,7 @@ export class UserService {
   postHeader = { headers: new HttpHeaders({ 'Content-Type':'application/json' }) };
 
   loginUser(loginData){
-    return this.http.post('http://localhost:3000/user/login',loginData,this.postHeader);
+    return this.http.post('https://visitor-app-backend.herokuapp.com/user/login',loginData,this.postHeader);
   }
 
   setToken(token: string) {
