@@ -24,5 +24,17 @@ export class VisitService {
     return this.http.post('https://visitor-app-backend.herokuapp.com/visit/admin/listVisit',{},this.authHeader);
   }
 
+  listVistsGateKeeper(visitDate){
+    return this.http.post('https://visitor-app-backend.herokuapp.com/visit/gatekeeper/listVisit',visitDate,this.authHeader);
+  }
+
+  updateVistedGateKeeper(visitId){
+    return this.http.post('https://visitor-app-backend.herokuapp.com/visit/gatekeeper/updateVisited',visitId,this.authHeader);
+  }
+
+  addUntrackedVisit(){
+    return this.http.post('https://visitor-app-backend.herokuapp.com/visit/gatekeeper/addUntrackedVisit',{},this.authHeader);
+  }
 
 }
+ 

@@ -28,7 +28,6 @@ import { SearchFilterPipe } from './searchFilter.pipe';
 import { VisitService } from './services/visit.service';
 import { UserService } from './services/user.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +57,7 @@ import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
     MatTooltipModule,
     TreeModule.forRoot()
   ],
-  providers: [VisitService, UserService, AuthGuard, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, JwtHelperService, AuthService],
+  providers: [VisitService, UserService, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, JwtHelperService, AuthService],
   bootstrap: [AppComponent],
   exports: [SearchFilterPipe]
 })

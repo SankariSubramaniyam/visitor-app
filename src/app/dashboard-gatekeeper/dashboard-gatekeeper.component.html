@@ -10,9 +10,9 @@
             <i class="material-icons">menu</i>
           </button>
             <span id="navbar-links-group" *ngIf = "toggleNavBar">
-          <a href="visitorPass" class="navbar-link-right">Visitor Pass</a>
-          <a href="dashBoard" class="navbar-link-right">DashBoard</a>
-          <a href="#" class="navbar-link-right">Logout</a>
+          <a routerLink="../visitorPass" routerLinkActive="active" class="navbar-link-right">Visitor Pass</a>
+          <a routerLink="../dashBoardAdmin" routerLinkActive="active" class="navbar-link-right" *ngIf="isLoggedIn">DashBoard</a>
+          <a href="javascript:void(0)" class="navbar-link-right" (click)="logout()" *ngIf="isLoggedIn">Logout</a>
           </span>
         </span>
       </nav>
@@ -20,18 +20,21 @@
 
     <div class="container-fluid "><br  />
       <div class="row">
-        <div class="col-sm-3 col-md-3"><input type="date" class="form-control" id="datePicker" value="1980-08-26"></div>
+        <div class="col-sm-3 col-md-3">
+          <input type="date" [(ngModel)]="visitFilterDate" class="form-control" 
+          id="datePicker" name="datePicker" #datePicker onkeydown="return false" (input)="inputDateEvent()"></div>
 
-        <div class="col-sm-2 col-md-2">
-          <select class="form-control">
+         <div class="col-sm-12 col-md-3 untrackBtn input-group">
+          <!-- <select class="form-control">
             <option>CEG</option>
             <option>MIT</option>
-          </select>
+          </select> -->
+          <button type="button" class="btn btn-primary col-sm-12" (click)="addUntrackedVisitor()">Untracked Visitor</button>
         </div>
 
 </div>
 <br />
-
+<div class="table-responsive">
       <table class="table table-bordered">
         <thead class="thead-red">
           <tr>
@@ -49,18 +52,19 @@
             <td>{{visit.visitor_name}}</td>
             <td>{{visit.visitor_org}},{{visit.visitor_desg}}</td>
             <td>{{visit.to_visit}}</td>
-            <td><button type="button" class="btn btn-primary" (click)="printVisitorModal(i)" onclick="window.print();">Generate Pass</button></td>
+            <td> 
+              <button type="button" class="btn btn-primary" (click)="updateVisitStatus(visit)"> <i class="material-icons">check</i></button>&nbsp;
+              <button type="button" class="btn btn-primary" (click)="printVisitorModal(visit)" onclick="window.print();"><i class="material-icons">local_printshop</i></button>
+            </td>
           </tr>
         </tbody>
       </table>
-      <nav aria-label="Page navigation example">
-  <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">Page: 1</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
-</nav>
     </div>
+    </div>
+  </div>
+
+  <div class="formLoader" *ngIf="showLoader">
+    <mat-progress-bar mode="indeterminate" color="warn" aria-label="Loading"></mat-progress-bar>
   </div>
 
     <div class="pass-print" >

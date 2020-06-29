@@ -38,13 +38,10 @@ export class IndexComponentComponent implements OnInit {
         this.showLoader = false;
 
         this.userService.setToken(response['token']);
-        this.userService.setUserType(response['utype']);
-
         this.updateIsLoggedIn();
 
-        let url = '../dashBoard'+this.userService.getUserType();
-        this.router.navigateByUrl(url, { skipLocationChange: true }).then(() => {
-          this.router.navigate([url]);
+        this.router.navigateByUrl('../dashBoard', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['../dashBoard']);
         }); 
 
       },
