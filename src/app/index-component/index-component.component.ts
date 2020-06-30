@@ -32,7 +32,6 @@ export class IndexComponentComponent implements OnInit {
         this.showLoader = false;
 
         this.userService.setToken(response['token']);
-        //this.updateIsLoggedIn();
 
         this.router.navigateByUrl('../dashBoard', { skipLocationChange: true }).then(() => {
           this.router.navigate(['../dashBoard']);
@@ -44,15 +43,9 @@ export class IndexComponentComponent implements OnInit {
           this.serverErrorMsg = (<string>error.error.message);
         }
         this.showLoader = false;
-        
-        //this.updateIsLoggedIn();
       }
     );
   }
-
-  // updateIsLoggedIn(){
-  //   this.isLoggedIn = this.authService.isAuthenticated();
-  // }
 
   setLoginStatus($event){
     this.isLoggedIn = (<boolean>$event);

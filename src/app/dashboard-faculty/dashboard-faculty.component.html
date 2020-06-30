@@ -1,136 +1,135 @@
+<div class="container_index">
+  <header class="header_div">
+    <app-header></app-header>
+  </header>
 
-  <div class="container_index">
-    <header class="header_div">
-      <nav class="navbar col-sm-12">
-        <span class="navbar-brand">
-          <a href="../index.html" class="navbar-title"><img src="/../../assets/images/annauniv_red.png" class="logo">&nbsp;&nbsp;AU VISITOR PASS</a>
-        </span>
-        <span class="float-right">
-          <button type="button" id="navbar-toggle-button" (click)=toggle()>
-            <i class="material-icons">menu</i>
-          </button>
-            <span id="navbar-links-group" *ngIf = "toggleNavBar">
-          <a href="visitorPass" class="navbar-link-right">Visitor Pass</a>
-          <a href="dashBoard" class="navbar-link-right">DashBoard</a>
-          <a href="#" class="navbar-link-right">Logout</a>
-          </span>
-        </span>
-      </nav>
-    </header>
-
-    <div class="container-fluid "><br  />
-      <div class="row">
-        <div class="col-sm-3 col-md-3"><input type="date" class="form-control" id="datePicker" value="1980-08-26"></div>
-
-        <div class="col-sm-4">
-   <input type="text" class="form-control" placeholder="Search...">
+  <div class="container-fluid "><br />
+    <div class="row">
+      <div class="col-sm-3 col-md-3 input-group">
+        <input type="date" [(ngModel)]="visitFilterObj.visit_date" class="form-control" id="datePicker" name="datePicker" #datePicker placeholder="dd/mm/yyyy" >                    
+        <div class="input-group-append" (click) = "clearSearchDate()">
+          <div class="input-group-text"><i class="material-icons">clear</i></div>
         </div>
-
-        <div class="col-sm-2 col-md-2">
-          <select class="form-control">
-            <option>CEG</option>
-            <option>MIT</option>
-          </select>
-        </div>
-
-        <div class="col-sm-2">
-          <select class="form-control">
-            <option selected disabled>Filter</option>
-            <option>Filter option 1</option>
-            <option>Filter option 2</option>
-          </select>
       </div>
 
-</div>
-<br />
+      <div class="col-sm-6 input-group">
+        <input type="text" class="form-control" [(ngModel)]="visitFilterObj.filter_string" 
+            id="searchFilter" name="searchFilter" placeholder="Search..." #searchFilter>
+        <div class="input-group-append" (click) = "clearFilterString()">
+          <div class="input-group-text"><i class="material-icons">clear</i></div>
+        </div>
+      </div>
 
-<table class="table table-bordered dashtable">
-  <thead class="thead-red">
-    <tr>
-      <th scope="col">Visit ID</th>
-      <th scope="col">Visitor Name</th>
-      <th scope="col">Visitor Org, Designation</th>
-      <th scope="col">Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let visit of adminVisits; let i = index" data-toggle="modal" data-target="#visitorModal" (click)="showVisitorModal(i)">
-      <th scope="row">{{visit.visit_id}}</th>
-      <td>{{visit.visitor_name}}</td>
-      <td>{{visit.visitor_org}},{{visit.visitor_desg}}</td>
-      <td>{{visit.visit_date}}</td>
-    </tr>
-  </tbody>
-</table>
-      <nav aria-label="Page navigation example">
-  <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">Page: 1</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
-</nav>
+      <div class="col-sm-3 input-group">
+        <select class="form-control" [(ngModel)]="visitFilterObj.visitor_status" 
+            id="selectTrackStatus" name="selectTrackStatus" #selectTrackStatus>
+            <option value='1' selected>Tracked</option>
+            <option value='0'>Untracked</option>
+            <option value='999'>All</option>
+        </select>        
+      </div>
+
     </div>
+    <br />
 
-
-
-
+    <ng-container *ngIf="(staffVisits | srchFilterPipe : visitFilterObj) as resultFilter">
+    <div class="table-responsive">
+      
+      <table class="table table-bordered dashtable">
+        <thead class="thead-red">
+          <tr>  
+            <th scope="col">S.No</th>
+            <th scope="col">Date</th>
+            <th scope="col">Visit ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Organization, Designation</th>
+            <th scope="col">Approve</th>
+          </tr>
+        </thead>
+            <tbody>
+          <tr *ngFor="let visit of resultFilter; let i = index" data-toggle="modal" data-target="#visitorModal"
+            (click)="showVisitorModal(visit)" [ngClass]="(visit.visited == '1' ) ? 'visited' : 'not-visited'">
+            <th scope="row">{{i+1}}</th>  
+            <td>{{visit.visit_date}}</td>
+            <td>{{visit.visit_id}}</td>
+            <td>{{visit.visitor_name}}</td>
+            <td>{{visit.visitor_org}}, {{visit.visitor_desg}}</td>
+            <td> 
+              <button type="button" *ngIf="!visit.is_approved" class="btn btn-primary" (click)="updateVisitApproval(visit);stopEventPropagation()"> <i class="material-icons">check</i></button>
+              <span class="badge badge-success" *ngIf="visit.is_approved">Approved</span>
+            </td>
+              
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <span class="badge badge-light" >Count: <b>{{resultFilter.length}}</b></span>
+  </ng-container>
   </div>
+  <div class="formLoader" *ngIf="showLoader">
+    <mat-progress-bar mode="indeterminate" color="warn" aria-label="Loading"></mat-progress-bar>
+  </div>
+</div>
+
 
 
 <!-- Modal -->
-<div class="modal fade" id="visitorModal" tabindex="-1" role="dialog" aria-labelledby="visitorModalLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="visitorModalLabel">Visitor Details</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+<div class="modal fade" id="visitorModal" tabindex="-1" role="dialog" aria-labelledby="visitorModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="visitorModalLabel">Visitor Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-    <div class="modal-body">
+      <div class="modal-body">
 
-      <table class="table table-bordered">
-        <tbody>
-          <tr>
-            <th scope="row">Visit Id</th>
-            <td>{{selectedVisit.visit_id}}</td>
-          </tr>
-          <tr>
-            <th scope="row">Visitor Name</th>
-            <td>{{selectedVisit.visitor_name}}</td>
-          </tr>
-          <tr>
-            <th scope="row">Visitor Organization, Designation</th>
-            <td>{{selectedVisit.visitor_org}} , {{selectedVisit.visitor_desg}}</td>
-          </tr>
-          <tr>
-            <th scope="row">Date</th>
-            <td>{{selectedVisit.visit_date}}</td>
-          </tr>
-          <tr>
-            <th scope="row">Purpose</th>
-            <td>{{selectedVisit.purpose}}</td>
-          </tr>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th scope="row">Visit Id</th>
+              <td>{{selectedVisit.visit_id}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Visitor Name</th>
+              <td>{{selectedVisit.visitor_name}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Visitor Organization, Designation</th>
+              <td>{{selectedVisit.visitor_org}} , {{selectedVisit.visitor_desg}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Date</th>
+              <td>{{selectedVisit.visit_date}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Purpose</th>
+              <td>{{selectedVisit.purpose}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Detailed Purpose</th>
+              <td>{{selectedVisit.det_purpose}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Email</th>
+              <td>{{selectedVisit.visitor_email}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Mobile Number</th>
+              <td>{{selectedVisit.visitor_mobileno}}</td>
+            </tr>
+          </tbody>
+        </table>
 
-          <tr>
-            <th scope="row">Email</th>
-            <td>{{selectedVisit.visitor_email}}</td>
-          </tr>
-          <tr>
-            <th scope="row">Mobile Number</th>
-            <td>{{selectedVisit.visitor_mobileno}}</td>
-          </tr>
+      </div>
 
-        </tbody>
-      </table>
-
-    </div>
-
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary">Approve</button>
-       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" *ngIf="!selectedVisit.is_approved" (click)="updateVisitApproval(selectedVisit)" >Approve</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
-</div>
 </div>

@@ -34,7 +34,7 @@ const routes: Routes = [
     } 
   },
   { 
-    path: 'dashBoardFaculty', 
+    path: 'dashBoardStaff', 
     component: DashboardFacultyComponent, 
     canActivate: [RoleGuard],
     data: { 

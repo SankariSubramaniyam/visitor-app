@@ -12,5 +12,6 @@ export class Visit{
     det_purpose? : string;
     filter_string? : string;
     visited? : Number;
+    is_approved? : Number;
     visitor_status? : Number;
 }

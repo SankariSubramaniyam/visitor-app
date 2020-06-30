@@ -1,5 +1,12 @@
+.tree-container{
+  height:50vh;
+  max-height:50vh;
+  overflow-y:scroll;
+  overflow-x:auto;
+  padding-top:10px;
+}
 button{
-  margin-right:0.3rem;
+  margin-right:0.1rem;
   background-color: transparent;
   border: none;
     outline:none;
@@ -17,8 +24,20 @@ button.end-node{
   text-align: center;
   cursor: pointer;
 }
+
+
+
 mat-tree-node.end-node{
-    cursor: pointer;
+  cursor: pointer;
+  padding:0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  min-height: 30px;
+}
+
+mat-tree-node.end-node:hover{
+  background-color: #7b0708;
+  color:rgba(255,165,0);
 }
 
 .input-group-text{
@@ -29,3 +48,28 @@ mat-tree-node.end-node{
   border:none;
 }
 
+@media only screen and (min-width: 800px) and (max-width: 1605px){
+  .mat-tree-node {
+    min-height: 2em !important;
+    height: 2em;
+  }
+}
+
+@media only screen and (min-device-width : 240px) and (max-device-width : 768px)  {
+  mat-tree-node.end-node{
+    color:#7b0708;
+
+    font-weight: bold;
+  }
+  .tree-container{
+    overflow-x: scroll;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+  }
+  .mat-tree-node{
+    white-space: nowrap;
+    display: flex;
+  }
+  
+}

@@ -19,6 +19,7 @@ export class DashboardAdminComponent{
   isFalse : boolean = false;
   showLoader : boolean = false;
   visitFilterObj : Visit = new Visit();
+  filterCount = 0;
 
   constructor(private visitService : VisitService) { }
   ngOnInit(): void {

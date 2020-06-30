@@ -12,12 +12,12 @@ export class SearchFilterPipe implements PipeTransform {
     let srchTxt  = "";
     if(searchVisitObj.filter_string != undefined || searchVisitObj.filter_string != null)
         srchTxt  = searchVisitObj.filter_string.toLowerCase();
-
     
 
-return items.filter( visit => {
+    return items.filter( visit => {
       return (
-            (visit.visitor_name.toLowerCase().includes(srchTxt) ||
+            (visit.visit_id.toString().includes(srchTxt) ||
+            visit.visitor_name.toLowerCase().includes(srchTxt) ||
             visit.visitor_org.toLowerCase().includes(srchTxt)   ||
             visit.visitor_desg.toLowerCase().includes(srchTxt)  ||
             visit.to_visit.toLowerCase().includes(srchTxt)      ||
@@ -28,5 +28,5 @@ return items.filter( visit => {
             (visit.visitor_status == searchVisitObj.visitor_status || searchVisitObj.visitor_status==999)
         );
     });
-   }
+  } 
 }

@@ -7,35 +7,6 @@ html, body {
   background-color:  #7b0708;
   border-bottom: 4px solid rgba(255,165,0);
 }
-#navbar-toggle-button{
-  padding-left:5px;
-  background-color:transparent;
-  outline:none;
-  border:none;
-  color:rgb(255,165,0);
-}
-.navbar-title{
-  color: rgb(255,165,0);
-  font-size:40px;
-  overflow: hidden;
-  word-wrap:break-word;
-}
-
-.navbar-title:hover{
-  color: rgb(255,165,0);
-  text-decoration: none;
-}
-
-
-.navbar-link-right,.navbar-link-right:hover{
-  color: rgb(255,165,0);
-  text-decoration: none;
-  font-size:20px;
-  padding-left: 15px;
-}
-.navbar-link-right:hover{
-    text-decoration: underline;
-}
 
 .card {
   padding-left: 20px;
@@ -100,18 +71,13 @@ textarea.form-control:focus {
 
   }
 }
-.logo{
-  width:70px;
-}
+
 @media screen and (max-width: 768px) {
-  .navbar-title {
-    font-size: 6vw;
-  }
   .card{
     width:95%;
   }
-  .logo{
-    width:50px;
+  .table-responsive{
+    max-height: 60vh;
   }
 }
 .thead-red th{
@@ -138,7 +104,80 @@ form label {
   box-shadow: none!important;
 }
 
+.btn-primary:hover{
+  color:  #7b0708;
+  background-color:  rgba(255,165,0);
+  border-color:rgba(255,165,0);
+  outline: rgb(255,165,0);
+}
 
+.table-responsive{
+  max-height: 55vh;
+  overflow-y : scroll;
+  font-size: 6em;
+  margin-top:0px;
+}
+
+.modal-body{
+  height: 60vh;
+  max-height: 60vh;
+  overflow-y : scroll;
+}
+
+.input-group-text{
+  background-color: transparent;
+  cursor:pointer;
+  outline:none;
+  padding:0px;
+  border:none;
+}
+
+.formLoader {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 100vw;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+}
+
+/* Transparent Overlay */
+.formLoader:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.visited{
+  background-color: #ECFFE2;
+}
+
+.not-visited{
+  background-color: #FFEBE2;
+}
+
+.btn-primary{
+  background-color:  #7b0708;
+  color:  rgba(255,165,0);
+  border-color:rgba(255,165,0);
+  outline: rgb(255,165,0);
+  box-shadow: none!important;
+}
+
+.btn-primary:active{
+  background-color:  #7b0708 !important;
+  color:  rgba(255,165,0) !important;
+  border-color:rgba(255,165,0) !important;
+  outline: rgb(255,165,0) !important;
+  box-shadow: none!important;
+}
 
 .btn-primary:hover{
   color:  #7b0708;

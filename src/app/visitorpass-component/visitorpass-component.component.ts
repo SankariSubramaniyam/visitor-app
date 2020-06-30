@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import Swal from 'sweetalert2';
 import { VisitService } from '../services/visit.service'
 import { Visit } from '../models/visit.model';
@@ -12,6 +12,8 @@ import {formatDate} from '@angular/common';
 })
 export class VisitorpassComponentComponent implements OnInit {
 
+  @ViewChild('childVisiteeComp') childVisiteeComp;
+
   visitModel = new Visit();
   showLoader : boolean = false;
   startDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
@@ -20,6 +22,9 @@ export class VisitorpassComponentComponent implements OnInit {
   constructor(private visitService : VisitService) { }
   ngOnInit(): void {
     this.setDateAndTime();
+  }
+  ngAfterViewInit() {
+    console.log(this.childVisiteeComp);
   }
 
   bookVisit() {
@@ -37,6 +42,7 @@ export class VisitorpassComponentComponent implements OnInit {
         this.showLoader = false;
         this.bookVisit();
         visitForm.resetForm();
+        this.childVisiteeComp.clearSelectedNodeString();
         this.setDateAndTime();
         console.log(response);
       },

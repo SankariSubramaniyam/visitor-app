@@ -6,7 +6,7 @@
   <div class="container-fluid "><br />
     <div class="row">
       <div class="col-sm-3 col-md-3 input-group">
-        <input type="date" [(ngModel)]="visitFilterObj.visit_date" class="form-control" id="datePicker" name="datePicker" #datePicker>                    
+        <input type="date" [(ngModel)]="visitFilterObj.visit_date" class="form-control" id="datePicker" name="datePicker" #datePicker placeholder="dd/mm/yyyy" >                    
         <div class="input-group-append" (click) = "clearSearchDate()">
           <div class="input-group-text"><i class="material-icons">clear</i></div>
         </div>
@@ -49,6 +49,7 @@
         </div>
       </mat-expansion-panel>
     </div>
+    <ng-container *ngIf="(adminVisits | srchFilterPipe : visitFilterObj) as resultFilter">
     <div class="table-responsive">
     <table class="table table-bordered dashtable">
       <thead class="thead-red">
@@ -62,7 +63,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let visit of adminVisits | srchFilterPipe : visitFilterObj ; let i = index" data-toggle="modal" data-target="#visitorModal"
+        <tr *ngFor="let visit of resultFilter; let i = index" data-toggle="modal" data-target="#visitorModal"
           (click)="showVisitorModal(visit)" [ngClass]="(visit.visited == '1' ) ? 'visited' : 'not-visited'">
           <th scope="row">{{i+1}}</th>  
           <td>{{visit.visit_date}}</td>
@@ -74,6 +75,8 @@
       </tbody>
     </table>
     </div>
+    <span class="badge badge-light" >Count: <b>{{resultFilter.length}}</b></span>
+    </ng-container>
   </div>
 
   <div class="formLoader" *ngIf="showLoader">

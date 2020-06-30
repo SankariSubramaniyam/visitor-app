@@ -61,7 +61,7 @@
               Designation</div>
           </div>
 
-          <app-visitee-hierarchy (stringEventEmitter)="setToVisit($event)"></app-visitee-hierarchy>
+          <app-visitee-hierarchy #childVisiteeComp (stringEventEmitter)="setToVisit($event)"></app-visitee-hierarchy>
           <div class="form-group row">
             <input [(ngModel)]="visitModel.to_visit" #inputtv="ngModel" name="toVisit" type="hidden" required
               class="form-control" id="toVisit">
