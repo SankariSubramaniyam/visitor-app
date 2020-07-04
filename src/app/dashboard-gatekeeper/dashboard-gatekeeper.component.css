@@ -82,6 +82,14 @@ textarea.form-control:focus {
   .pass-print {
      display: block;
   }
+  .navbar-title{
+    color: rgb(255,165,0);
+    font-size:3vw;
+    overflow: hidden;
+  }
+  .logo{
+    width:50px;
+  }
 }
 
 @media screen and (max-width: 768px) {
