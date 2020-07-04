@@ -31,7 +31,7 @@ export class DashboardFacultyComponent implements OnInit {
     this.visitService.listVistsStaff().subscribe(
       response => {
         this.staffVisits = response["Visits"];
-        this.selectedVisit = this.staffVisits[0];
+        // this.selectedVisit = this.staffVisits[0];   
         this.showLoader = false;
       },
       error => {
