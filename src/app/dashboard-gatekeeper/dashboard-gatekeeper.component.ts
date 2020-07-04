@@ -30,8 +30,11 @@ export class DashboardGatekeeperComponent implements OnInit{
 
   printVisitorModal(visit : Visit) : void{
     this.selectedVisit = this.gateVisits.find(visitItem => visitItem.visit_id == visit.visit_id);
-    if(this.selectedVisit==null || this.selectedVisit==undefined)
-      this.selectedVisit = this.gateVisits[0];
+  //   if(this.selectedVisit==null || this.selectedVisit==undefined)
+  //     this.selectedVisit = this.gateVisits[0];
+  //   window.print(); 
+  //  https://stackoverflow.com/questions/28897460/window-print-does-not-print-the-updated-model-data-in-angular-js
+   setTimeout(window.print, 0);
   }
 
   updateVisitStatus(visit : Visit){
@@ -68,7 +71,7 @@ export class DashboardGatekeeperComponent implements OnInit{
     this.visitService.listVistsGateKeeper(visitDate).subscribe(
       response => {
         this.gateVisits = response["Visits"];
-        this.selectedVisit = this.gateVisits[0];
+        //this.selectedVisit = this.gateVisits[0];
         this.showLoader = false;
       },
       error => {

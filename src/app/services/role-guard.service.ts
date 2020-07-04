@@ -18,17 +18,17 @@ export class RoleGuardService implements CanActivate {
     const tokenPayload = decode(token);
 
     if (!this.auth.isAuthenticated()) {
-      console.log("Token not auth");
+      //console.log("Token not auth");
       this.router.navigate(['']); 
       return false;
     }
     else if (tokenPayload.role == undefined || tokenPayload.role == null) {
-      console.log("Payload not defined",tokenPayload.role);
+      //console.log("Payload not defined",tokenPayload.role);
       this.router.navigate(['']); 
       return false;
     }
     else if (redirectDashBoard == true) {
-      console.log("Redirect true",'dashBoard'+tokenPayload.role);
+      //console.log("Redirect true",'dashBoard'+tokenPayload.role);
       let url = "../dashBoard"+tokenPayload.role;
       //this.router.navigate([url]);       
        this.router.navigateByUrl(url, { skipLocationChange: true }).then(() => {
@@ -37,11 +37,11 @@ export class RoleGuardService implements CanActivate {
        return true;
     }
     else if (tokenPayload.role == expectedRole && redirectDashBoard == false) {
-      console.log("Expected Role",tokenPayload.role,expectedRole);
+      //console.log("Expected Role",tokenPayload.role,expectedRole);
       return true;
     }
-    console.log("Condition not checked");
-    console.log("Expected Role",tokenPayload.role,expectedRole);
+    //console.log("Condition not checked");
+    //console.log("Expected Role",tokenPayload.role,expectedRole);
     this.router.navigate(['']);
     return false;
   }
